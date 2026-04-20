@@ -3,7 +3,7 @@ chai.use(require('chai-subset'))
 chai.use(require('chai-datetime'))
 const expect = chai.expect
 
-const ediParser = require('../../../index').EdiParser
+const ediParser = require('../../../dist/index').EdiParser
 
 const ediFileContent = `
 03300000        2018727053000174397800130035168     006404154           PAGAR.ME PAGAMENTOS S/A       BANCO SANTANDER (BRASIL) S/A            206032014      000003040

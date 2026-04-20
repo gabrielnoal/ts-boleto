@@ -1,6 +1,6 @@
 const moment = require('moment')
 const testBanks = require('./banks')
-const Boleto = require('../../lib/boleto')(testBanks)
+const Boleto = require('../../dist/lib/boleto')(testBanks)
 
 const dataEmissao = moment(moment('2018-10-25 20:48:01.981+00').utc().format('YYYY-MM-DD')).valueOf()
 const dataVencimento = moment(moment('2018-11-09 02:00:00+00').utc().format('YYYY-MM-DD')).valueOf()

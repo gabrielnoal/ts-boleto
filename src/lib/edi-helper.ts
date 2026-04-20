@@ -1,10 +1,10 @@
-const crypto = require('crypto')
+import crypto from 'crypto'
 
-exports.calculateLineChecksum = function (line) {
+export function calculateLineChecksum (line: string): string {
   return crypto.createHash('sha1').update(line).digest('hex')
 }
 
-exports.dateFromEdiDate = function (ediDate) {
+export function dateFromEdiDate (ediDate: string): Date {
   const year = ediDate.substring(4, 8)
   const month = ediDate.substring(2, 4)
   const day = ediDate.substring(0, 2)

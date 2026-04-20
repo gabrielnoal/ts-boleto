@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 
-const { fatorVencimento } = require('../../lib/formatters')
+const { fatorVencimento } = require('../../dist/lib/formatters')
 
 describe('Formatters', () => {
   describe('Fator de Vencimento', () => {

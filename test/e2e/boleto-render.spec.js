@@ -3,7 +3,7 @@ const chai = require('chai')
 chai.use(require('chai-string'))
 const expect = chai.expect
 
-const Boleto = require('../../index').Boleto
+const Boleto = require('../../dist/index').Boleto
 const boletoOutput = require('./boleto-output')
 
 const createBoleto = (bank) => new Boleto({

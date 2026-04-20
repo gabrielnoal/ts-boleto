@@ -1,4 +1,4 @@
-const Boleto = require('../../../index').Boleto
+const Boleto = require('../../../dist/index').Boleto
 const moment = require('moment')
 const expect = require('chai').expect
 
