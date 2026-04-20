@@ -129,7 +129,7 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
         ${bmpBarcode}
         height: 50px;
         overflow: hidden;
-        display: inline-block;
+        display: ${bmpBarcode ? 'block' : 'inline-block'};
         vertical-align: bottom;
       }
 

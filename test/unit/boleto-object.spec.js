@@ -1,5 +1,5 @@
 const R = require('ramda')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 const chai = require('chai')
 chai.use(require('chai-subset'))

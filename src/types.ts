@@ -1,4 +1,4 @@
-import type { Moment } from 'moment'
+import type { Moment } from 'moment-timezone'
 
 /**
  * Input fields accepted when constructing a {@link BoletoConstructor}.

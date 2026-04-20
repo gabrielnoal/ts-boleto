@@ -1,5 +1,7 @@
 import * as ejs from 'ejs'
-import moment from 'moment'
+import moment from 'moment-timezone'
+
+moment.tz.setDefault('America/Sao_Paulo')
 
 const escapeXML = ejs.escapeXML.bind(ejs)
 
@@ -31,7 +33,7 @@ export function formatAmount (amount: string | number): string {
 }
 
 export function formatDate (date: moment.MomentInput): string {
-  return moment(date).format('DD/MM/YYYY')
+  return moment(date).tz('America/Sao_Paulo').format('DD/MM/YYYY')
 }
 
 export function mod11 (num: string, base?: number, r?: number): number | undefined {

@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import type { BankModule, BoletoInstance } from '../../types'
 import * as ediHelper from '../../lib/edi-helper'
 import * as formatters from '../../lib/formatters'
