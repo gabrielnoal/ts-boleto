@@ -21,3 +21,6 @@ coverage
 
 # Local npm settings (not committed)
 .npmrc
+
+dist/
+*.tsbuildinfo

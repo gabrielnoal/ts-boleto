@@ -1,5 +1,5 @@
 const R = require('ramda')
-const moment = require('../../lib/moment-brt')
+const moment = require('moment-timezone')
 
 const chai = require('chai')
 chai.use(require('chai-subset'))
@@ -7,7 +7,7 @@ chai.use(require('chai-datetime'))
 const expect = chai.expect
 
 const testBanks = require('../mocks/banks')
-const Boleto = require('../../lib/boleto')(testBanks)
+const Boleto = require('../../dist/lib/boleto')(testBanks)
 
 describe('Boleto Object', () => {
   describe('when creating a boleto with no options', () => {

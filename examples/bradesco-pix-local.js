@@ -5,7 +5,7 @@
  */
 
 const http = require('http')
-const Boleto = require('../index').Boleto
+const Boleto = require('../dist/index').Boleto
 
 const PIX_PAYLOAD = 'https://qrpix-h.bradesco.com.br/qr/v2/cobv/a7d53d47-3820-4092-bd1a-420e7dec55f0'
 

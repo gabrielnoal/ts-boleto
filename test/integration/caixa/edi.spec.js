@@ -3,7 +3,7 @@ chai.use(require('chai-subset'))
 chai.use(require('chai-datetime'))
 const expect = chai.expect
 
-const ediParser = require('../../../index').EdiParser
+const ediParser = require('../../../dist/index').EdiParser
 
 const ediFileContent = `
 02RETORNO01COBRANCA       33371103388         PAGAR.ME PAGAMENTOS S.A.      104C ECON FEDERAL 010221                                                          007                                                                                                                                                                                                                                    00035000001

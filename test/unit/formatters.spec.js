@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 
-const { fatorVencimento, formatDate } = require('../../lib/formatters')
+const { fatorVencimento, formatDate } = require('../../dist/lib/formatters')
 
 describe('Formatters', () => {
   describe('formatDate', () => {

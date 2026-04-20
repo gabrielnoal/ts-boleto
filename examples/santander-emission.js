@@ -3,7 +3,7 @@ const path = require('path')
 
 const app = express()
 
-const Boleto = require('../index').Boleto
+const Boleto = require('../dist/index').Boleto
 
 const boleto = new Boleto({
   'banco': 'santander',
