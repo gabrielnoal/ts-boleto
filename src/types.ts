@@ -46,6 +46,8 @@ export interface BoletoInstance {
   local_de_pagamento?: string
   pix_copia_cola?: string
   pixCopiaCola?: string
+  _calculate: () => void
+  renderHTML: (callback: (html: string) => void) => void
   [key: string]: unknown
 }
 
