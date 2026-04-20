@@ -1,89 +1,148 @@
-node-boleto
-=============
+# node-boleto
 
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=node-boleto&metric=alert_status&token=7d0c239fa1a25383cf94cc67718c4d7fd9ee34bc)](https://sonarcloud.io/dashboard?id=node-boleto)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=node-boleto&metric=coverage&token=7d0c239fa1a25383cf94cc67718c4d7fd9ee34bc)](https://sonarcloud.io/dashboard?id=node-boleto)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=node-boleto&metric=sqale_rating&token=7d0c239fa1a25383cf94cc67718c4d7fd9ee34bc)](https://sonarcloud.io/dashboard?id=node-boleto)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=node-boleto&metric=reliability_rating&token=7d0c239fa1a25383cf94cc67718c4d7fd9ee34bc)](https://sonarcloud.io/dashboard?id=node-boleto)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=node-boleto&metric=security_rating&token=7d0c239fa1a25383cf94cc67718c4d7fd9ee34bc)](https://sonarcloud.io/dashboard?id=node-boleto)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Geração de boleto bancário em Node.js. Os algoritmos de geração da linha digitável e do código de barras foram inspirados no [boletophp](https://github.com/BielSystems/boletophp).
+Biblioteca em **TypeScript** (compilada para CommonJS) para **gerar boletos em HTML** (linha digitável, código de barras e layout) e **interpretar arquivos de retorno EDI**. A lógica de linha digitável e código de barras tem raízes no [boletophp](https://github.com/BielSystems/boletophp).
+
+- **Runtime:** Node.js **≥ 18.18** (veja `engines` em `package.json`)
+- **Pacote npm:** [`node-boleto`](https://www.npmjs.com/package/node-boleto) — nome do pacote publicado; este repositório mantém o código-fonte em `src/` e o build em `dist/`.
 
 ## Bancos suportados
 
-- Santander - by [pedrofranceschi](https://github.com/pedrofranceschi) - homologado
-- Bradesco - by [pedrofranceschi](https://github.com/pedrofranceschi)
+| Banco     | Emissão (HTML / código de barras) | Retorno EDI | Observações |
+|-----------|-------------------------------------|------------|-------------|
+| Santander | Sim                                 | Sim        | — |
+| Bradesco  | Sim                                 | Sim        | QR **PIX** no boleto quando `pix_copia_cola` ou `pixCopiaCola` é informado (somente Bradesco). |
+| Caixa     | Não                                 | Sim        | Apenas `parseEDIFile`; não use `banco: 'caixa'` para emissão de boleto. |
+
+Novos bancos podem ser adicionados em `src/banks/<nome>/`, seguindo o contrato em `src/types.ts` (`BankModule`).
 
 ## Instalação
 
-```
+```bash
 npm install node-boleto
 ```
 
-## Exemplo de uso
+Para trabalhar a partir do clone deste repositório:
 
-Emitindo um boleto:
-
-```javascript
-var Boleto = require('node-boleto').Boleto;
-
-var boleto = new Boleto({
-  'banco': "santander", // nome do banco dentro da pasta 'banks'
-  'data_emissao': new Date(),
-  'data_vencimento': new Date(new Date().getTime() + 5 * 24 * 3600 * 1000), // 5 dias futuramente
-  'valor': 1500, // R$ 15,00 (valor em centavos)
-  'nosso_numero': "1234567",
-  'numero_documento': "123123",
-  'cedente': "Pagar.me Pagamentos S/A",
-  'cedente_cnpj': "18727053000174", // sem pontos e traços
-  'agencia': "3978",
-  'codigo_cedente': "6404154", // PSK (código da carteira)
-  'carteira': "102"
-});
-
-console.log("Linha digitável: " + boleto['linha_digitavel'])
-
-boleto.renderHTML(function(html){
-  console.log(html);
-});
+```bash
+npm install
+npm run build
 ```
 
-Parseando o arquivo-retorno EDI do banco:
+O consumo da API publicada usa o artefato em `dist/` (e tipos `dist/*.d.ts`).
+
+## Uso básico — emitir boleto
 
 ```javascript
-var ediParser = require('node-boleto').EdiParser,
-	fs = require('fs');
+const { Boleto } = require('node-boleto')
 
-var ediFileContent = fs.readFileSync("arquivo.txt").toString();
+const boleto = new Boleto({
+  banco: 'santander', // nome da pasta em src/banks
+  data_emissao: new Date(),
+  data_vencimento: new Date(Date.now() + 5 * 24 * 3600 * 1000),
+  valor: 1500, // centavos (ex.: R$ 15,00)
+  nosso_numero: '1234567',
+  numero_documento: '123123',
+  cedente: 'Pagar.me Pagamentos S/A',
+  cedente_cnpj: '18727053000174',
+  agencia: '3978',
+  codigo_cedente: '6404154',
+  carteira: '102'
+})
 
-var parsedFile = ediParser.parse("santander", ediFileContent);
+console.log('Linha digitável:', boleto.linha_digitavel)
 
-console.log("Boletos pagos: ");
-console.log(parsedFile.boletos);
+boleto.renderHTML(function (html) {
+  console.log(html)
+})
 ```
 
-## Adicionando novos bancos
+### TypeScript
+
+Tipos públicos ficam em `dist/types.d.ts` (incluídos no pacote). A entrada principal (`export = { Boleto, EdiParser }`) é CommonJS; em TS costuma-se combinar `import type` profundo com `require`:
+
+```typescript
+import type { BoletoOptionsInput } from 'node-boleto/dist/types'
+
+const { Boleto } = require('node-boleto')
+
+const options: BoletoOptionsInput = {
+  banco: 'bradesco',
+  valor: 100,
+  nosso_numero: '1',
+  agencia: '1229',
+  codigo_cedente: '469',
+  carteira: '25',
+  data_emissao: new Date(),
+  data_vencimento: new Date()
+}
+
+const boleto = new Boleto(options)
+```
+
+### PIX (Bradesco)
+
+Para exibir QR Code no layout, passe o payload copia e cola (ou URL conforme o convênio):
+
+```javascript
+const boleto = new Boleto({
+  banco: 'bradesco',
+  // ... demais campos obrigatórios do banco
+  pix_copia_cola: '00020126580014br.gov.bcb.pix...' // ou URL do QR dinâmico, conforme o caso
+})
+```
+
+Há um servidor de exemplo após o build: `node examples/bradesco-pix-local.js` (porta `3003`).
+
+## Arquivo-retorno (EDI)
+
+```javascript
+const { EdiParser } = require('node-boleto')
+const fs = require('fs')
+
+const ediFileContent = fs.readFileSync('arquivo-retorno.txt', 'utf8')
+const parsedFile = EdiParser.parse('santander', ediFileContent)
+
+console.log(parsedFile.boletos)
+```
+
+Outros exemplos: `examples/santander-edi.js`, `examples/bradesco-edi.js`, `examples/*-emission.js`.
 
 ## Renderização do código de barras
 
-Atualmente, há duas maneiras de renderizar o código de barras: `img` e `bmp`.
-
-A engine `img` utiliza imagens brancas e pretas intercaladas para gerar o código de barras. Dessa forma, todos os browsers desde o IE6 são suportados. Esse modo de renderização, porém, é um pouco mais pesado, já que muitas `divs` são inseridas no HTML para a renderização.
-
-A engine `bmp` aproveita da característica monodimensional dos códigos de barra e gera apenas a primeira linha de pixels do boleto, repetindo as outras linhas por CSS. É mais leve e funciona na maioria dos browser - IE apenas a partir da versão 8.
-
-Para alterar a engine de renderização padrão:
+Duas engines: `img` (compatível com navegadores antigos, HTML mais pesado) e `bmp` (mais leve; IE a partir da versão 8).
 
 ```javascript
-Boleto.barcodeRenderEngine = 'bmp';
+const { Boleto } = require('node-boleto')
+Boleto.barcodeRenderEngine = 'bmp' // padrão: 'img'
 ```
+
+O layout HTML é gerado com [EJS](https://ejs.co/) a partir de `assets/layout.ejs`.
+
+## Desenvolvimento
+
+| Comando | Descrição |
+|---------|-----------|
+| `npm run build` | Compila `src/` → `dist/` (`tsc`) |
+| `npm test` | Testes unitários, de integração e e2e (Mocha + nyc) |
+| `npm run lint` | ESLint (Standard) |
+| `npm run cover-report` | Relatório de cobertura em `./coverage` |
+
+Antes de rodar exemplos ou testes que carregam `dist/`, execute `npm run build`.
+
+## Estrutura (resumo)
+
+- `src/` — código TypeScript (`lib/`, `banks/`, `index.ts`, `types.ts`)
+- `dist/` — saída do build (não editar à mão)
+- `assets/` — template `layout.ejs` e recursos do boleto
+- `test/` — especificações Mocha em JavaScript
+- `examples/` — scripts de emissão, EDI e PIX local
 
 ## Licença
 
-(The MIT License)
-
-Copyright (c) 2013-2017 Pagar.me Pagamentos S/A
+MIT — Copyright (c) 2013-2017 Pagar.me Pagamentos S/A
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
