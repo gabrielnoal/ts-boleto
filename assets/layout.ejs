@@ -114,6 +114,8 @@
   .w667{width:667px}
   .BHead td{border-bottom:solid 2px #000}
   .EcdBar{height:50px;vertical-align:bottom}
+  .barcodeSection{margin-top:16px}
+  .barcodeCell{text-align:center;padding-left:0!important;padding-top:14px;vertical-align:bottom}
   .rc6 td{vertical-align:top;border-bottom:solid 1px #000;border-left:solid 1px #000}
   .rc6 div{padding-left:6px}
   .rc6 .t{font:9px "arial narrow";color:#000033;height:13px}
@@ -126,10 +128,16 @@
 		background-image: url(data:image/bmp;base64,<%= barcode_data %>);
 		background-repeat: repeat-y;
 		height: <%= barcode_height %>px;
+		overflow: hidden;
+		display: inline-block;
+		vertical-align: bottom;
 	}
   <% } else if (barcode_render_engine == 'img') { %>
 	.barcode {
 	  height: <%= barcode_height %>px;
+	  overflow: hidden;
+	  display: inline-block;
+	  vertical-align: bottom;
 	}
 
 	.barcode-line {
@@ -350,9 +358,25 @@
             <td class="w250 Ar">Autenticação mecânica - <b class="cpN">Ficha de Compensação</b></td>
         </tr>
         <tr class="h13"><td colspan="3" /></tr>
-    </table><table class="w666">
+    </table>
+    <% if (typeof pix_qr_data_url !== 'undefined' && pix_qr_data_url) { %>
+    <table class="w666">
+        <tr class="ct h13">
+            <td class="w659 Ac">Pagamento instantâneo (PIX)</td>
+        </tr>
         <tr>
-		  <td class="EcdBar Al pL10">
+            <td class="Ac At pb4">
+                <img src="<%= pix_qr_data_url %>" alt="QR Code para pagamento PIX" width="120" height="120" />
+            </td>
+        </tr>
+        <tr class="ti">
+            <td class="Ac">Leia o QR Code com o app do seu banco para pagar com PIX.</td>
+        </tr>
+    </table>
+    <% } %>
+    <table class="w666 barcodeSection">
+        <tr>
+		  <td class="EcdBar Ac barcodeCell">
 			<% if (barcode_render_engine == 'bmp') { %>
 			  <div class="barcode"/>
 			<% } else if (barcode_render_engine == 'img') { %>
