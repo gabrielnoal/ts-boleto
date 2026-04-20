@@ -36,6 +36,9 @@
     "url": "https://github.com/pagarme/node-boleto/issues"
   },
   "homepage": "https://github.com/pagarme/node-boleto",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "overrides": {
     "serialize-javascript": "7.0.5",
     "diff": "8.0.3"
