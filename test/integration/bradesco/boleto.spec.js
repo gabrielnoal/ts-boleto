@@ -216,7 +216,7 @@ describe('Bradesco Boleto', () => {
 
   describe('PIX QR no HTML', () => {
     it('inclui QR em base64 quando pix_copia_cola é informado', (done) => {
-      var boleto = new Boleto({
+      const boleto = new Boleto({
         'banco': 'bradesco',
         'data_emissao': moment('2017-01-01T00:00:00Z').valueOf(),
         'data_vencimento': moment('2017-01-05T00:00:00Z').valueOf(),
@@ -243,7 +243,7 @@ describe('Bradesco Boleto', () => {
     })
 
     it('aceita pixCopiaCola como alias', (done) => {
-      var boleto = new Boleto({
+      const boleto = new Boleto({
         'banco': 'bradesco',
         'data_emissao': moment('2017-01-01T00:00:00Z').valueOf(),
         'data_vencimento': moment('2017-01-05T00:00:00Z').valueOf(),
@@ -266,7 +266,7 @@ describe('Bradesco Boleto', () => {
     })
 
     it('não inclui bloco PIX sem payload', (done) => {
-      var boleto = new Boleto({
+      const boleto = new Boleto({
         'banco': 'bradesco',
         'data_emissao': moment('2017-01-01T00:00:00Z').valueOf(),
         'data_vencimento': moment('2017-01-05T00:00:00Z').valueOf(),
