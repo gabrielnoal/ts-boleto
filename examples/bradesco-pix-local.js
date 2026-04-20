@@ -4,12 +4,12 @@
  * Abra: http://127.0.0.1:3003
  */
 
-var http = require('http')
-var Boleto = require('../index').Boleto
+const http = require('http')
+const Boleto = require('../index').Boleto
 
-var PIX_PAYLOAD = 'https://qrpix-h.bradesco.com.br/qr/v2/cobv/a7d53d47-3820-4092-bd1a-420e7dec55f0'
+const PIX_PAYLOAD = 'https://qrpix-h.bradesco.com.br/qr/v2/cobv/a7d53d47-3820-4092-bd1a-420e7dec55f0'
 
-var boleto = new Boleto({
+const boleto = new Boleto({
   banco: 'bradesco',
   data_emissao: new Date(),
   data_vencimento: new Date(new Date().getTime() + 5 * 24 * 3600 * 1000),
@@ -27,7 +27,7 @@ var boleto = new Boleto({
   pix_copia_cola: PIX_PAYLOAD
 })
 
-var server = http.createServer(function (req, res) {
+const server = http.createServer(function (req, res) {
   if (req.url !== '/' && req.url !== '/index.html') {
     res.writeHead(404, { 'Content-Type': 'text/plain' })
     res.end('Not found')

@@ -367,8 +367,8 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
     </div>
       <script>
         (function () {
-          var onLoadDocumentElement
-          var onLoadDocumentCopy
+          let onLoadDocumentElement
+          let onLoadDocumentCopy
 
           onDOMReady(function () {
             onLoadDocumentCopy = document.body.children[0].outerHTML
@@ -388,10 +388,10 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
           }
 
           function onDOMChange (callback) {
-            var childContent = document.body.children[0];
+            const childContent = document.body.children[0];
 
             if (childContent) {
-              var currentDocumentElement = hashString(childContent.outerHTML);
+              const currentDocumentElement = hashString(childContent.outerHTML);
 
               if (onLoadDocumentElement !== currentDocumentElement) {
                 callback();
@@ -406,12 +406,12 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
           }
 
           function hashString (value) {
-            var hash = 0;
+            let hash = 0;
 
             if (value.length === 0) return hash;
 
-            for (i = 0; i < value.length; i++) {
-              char = value.charCodeAt(i);
+            for (let i = 0; i < value.length; i++) {
+              const char = value.charCodeAt(i);
               hash = ((hash<<5)-hash)+char;
               hash = hash & hash // Convert to 32bit integer
             }

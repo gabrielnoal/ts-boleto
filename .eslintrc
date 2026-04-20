@@ -1,10 +1,16 @@
 {
+  "root": true,
   "extends": "standard",
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "script"
+  },
+  "env": {
+    "node": true,
+    "mocha": true
+  },
   "rules": {
     "eqeqeq": "warn",
     "no-throw-literal": "off"
-  },
-  "env": {
-    "mocha": true
   }
 }
