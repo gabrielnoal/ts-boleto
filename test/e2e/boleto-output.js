@@ -115,6 +115,8 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
       .w667{width:667px}
       .BHead td{border-bottom:solid 2px #000}
       .EcdBar{height:50px;vertical-align:bottom}
+      .barcodeSection{margin-top:16px}
+      .barcodeCell{text-align:center;padding-left:0!important;padding-top:14px;vertical-align:bottom}
       .rc6 td{vertical-align:top;border-bottom:solid 1px #000;border-left:solid 1px #000}
       .rc6 div{padding-left:6px}
       .rc6 .t{font:9px "arial narrow";color:#000033;height:13px}
@@ -126,6 +128,9 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
       .barcode {
         ${bmpBarcode}
         height: 50px;
+        overflow: hidden;
+        display: ${bmpBarcode ? 'block' : 'inline-block'};
+        vertical-align: bottom;
       }
 
       ${bmpBarcode ? '' : `.barcode-line {
@@ -346,9 +351,9 @@ module.exports = (bankLogo, bankNumber, linhaDigitavel, barcode, bmpBarcode) => 
                 <td class="w250 Ar">Autenticação mecânica - <b class="cpN">Ficha de Compensação</b></td>
             </tr>
             <tr class="h13"><td colspan="3" /></tr>
-        </table><table class="w666">
+        </table><table class="w666 barcodeSection">
             <tr>
-          <td class="EcdBar Al pL10">
+          <td class="EcdBar Ac barcodeCell">
 
             ${barcode ? `<div class="barcode">${barcode}</div>` : '<div class="barcode"/>'}
 
