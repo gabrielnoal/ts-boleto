@@ -1,4 +1,4 @@
-const moment = require('moment')
+const moment = require('../../lib/moment-brt')
 const testBanks = require('./banks')
 const Boleto = require('../../lib/boleto')(testBanks)
 

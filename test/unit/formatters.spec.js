@@ -1,8 +1,14 @@
 const { expect } = require('chai')
 
-const { fatorVencimento } = require('../../lib/formatters')
+const { fatorVencimento, formatDate } = require('../../lib/formatters')
 
 describe('Formatters', () => {
+  describe('formatDate', () => {
+    it('uses America/Sao_Paulo calendar day for UTC timestamps', () => {
+      expect(formatDate('2025-01-05T02:00:00.000Z')).to.equal('04/01/2025')
+    })
+  })
+
   describe('Fator de Vencimento', () => {
     const dates = [
       {

@@ -1,5 +1,5 @@
 const Boleto = require('../../../index').Boleto
-const moment = require('moment')
+const moment = require('../../../lib/moment-brt')
 const expect = require('chai').expect
 
 describe('Santander Boleto', () => {

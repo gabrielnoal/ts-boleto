@@ -1,4 +1,4 @@
-const moment = require('moment')
+const moment = require('../../lib/moment-brt')
 var formatters = require('../../lib/formatters')
 var ediHelper = require('../../lib/edi-helper')
 
