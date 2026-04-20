@@ -13,7 +13,7 @@ Biblioteca em **TypeScript** (compilada para CommonJS) para **gerar boletos em H
 | Banco     | Emissão (HTML / código de barras) | Retorno EDI | Observações |
 |-----------|-------------------------------------|------------|-------------|
 | Santander | Sim                                 | Sim        | — |
-| Bradesco  | Sim                                 | Sim        | QR **PIX** no boleto quando `pix_copia_cola` ou `pixCopiaCola` é informado (somente Bradesco). |
+| Bradesco  | Sim                                 | Sim        | QR **PIX** no boleto quando `pix_copia_cola` é informado (somente Bradesco). |
 | Caixa     | Não                                 | Sim        | Apenas `parseEDIFile`; não use `banco: 'caixa'` para emissão de boleto. |
 
 Novos bancos podem ser adicionados em `src/banks/<nome>/`, seguindo o contrato em `src/types.ts` (`BankModule`).

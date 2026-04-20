@@ -105,7 +105,7 @@ Boleto.prototype.renderHTML = function (this: BoletoInstance, callback: (html: s
   const linha = String((renderOptions.boleto as BoletoInstance).linha_digitavel)
   ;(renderOptions.boleto as BoletoInstance).linha_digitavel_hash = hashString(linha).toString()
 
-  const pixPayload = self.pix_copia_cola ?? self.pixCopiaCola
+  const pixPayload = self.pix_copia_cola
   const shouldRenderPixQr = self.banco === 'bradesco' &&
     typeof pixPayload === 'string' &&
     pixPayload.trim().length > 0

@@ -242,29 +242,6 @@ describe('Bradesco Boleto', () => {
       })
     })
 
-    it('aceita pixCopiaCola como alias', (done) => {
-      const boleto = new Boleto({
-        'banco': 'bradesco',
-        'data_emissao': moment('2017-01-01T00:00:00Z').valueOf(),
-        'data_vencimento': moment('2017-01-05T00:00:00Z').valueOf(),
-        'valor': 1500,
-        'nosso_numero': '6',
-        'numero_documento': '1',
-        'cedente': 'Pagar.me Pagamentos S/A',
-        'cedente_cnpj': '18727053000174',
-        'agencia': '1229',
-        'codigo_cedente': '469',
-        'carteira': '25',
-        'pagador': 'Nome do pagador',
-        'pixCopiaCola': 'pix-payload-teste-alias'
-      })
-
-      boleto.renderHTML(function (html) {
-        expect(html).to.contain('data:image/png;base64,')
-        done()
-      })
-    })
-
     it('não inclui bloco PIX sem payload', (done) => {
       const boleto = new Boleto({
         'banco': 'bradesco',
